@@ -1,4 +1,11 @@
 <?php
+/*
+ *  Titre       : revision_forum | fonctions.php
+ *  Auteur      : Diogo Canas Almeida
+ *  Date        : 30.08.2018
+ *  Version     : 1.0
+ *  Description : Page des fonctions
+ */
 
 const HOST = "localhost";
 const DBNAME = "forum";
