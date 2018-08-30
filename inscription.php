@@ -19,13 +19,9 @@ $btn_inscription = filter_input(INPUT_POST, 'btn_inscription');
 $donnees_form = array($_SESSION['prenom_inscription'], $_SESSION['nom_inscription'],
     $_SESSION['id_inscription'], $_SESSION['mdp_inscription'],
     $_SESSION['valid_mdp_inscription']);
+$liste_logins = array();
 
 include('./inc/fonctions.php');
-try {
-    $bdd = new PDO("mysql:host=localhost;dbname=forum", 'root', '');
-} catch (Exception $ex) {
-    die('Erreur : ' . $ex->getMessage());
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -71,7 +67,7 @@ if ($btn_inscription) {
         if (!empty($donnee)) {
             $donnees_vides = false;
         } else {
-            // Si une des données du formulaire est vide, sortir de la boucle.
+// Si une des données du formulaire est vide, sortir de la boucle.
             $donnees_vides = true;
             break;
         }
@@ -87,10 +83,10 @@ if ($btn_inscription) {
                 $_SESSION['mdp_inscription']
             ));
             header('Location: index.php');
-        } else {
-            echo "Le mot de passe et sa validation sont vides ou ne sont pas identiques.";
         }
     } else {
-        echo "Merci de remplir tous les champs !";
+        echo "Le mot de passe et sa validation sont vides ou ne sont pas identiques.";
     }
+} else {
+    echo "Merci de remplir tous les champs !";
 }

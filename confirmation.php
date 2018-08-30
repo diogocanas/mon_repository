@@ -9,11 +9,6 @@
 session_start();
 
 include('./inc/fonctions.php');
-try {
-    $bdd = new PDO("mysql:host=localhost;dbname=forum", 'root', '');
-} catch (Exception $ex) {
-    die('Erreur : ' . $ex->getMessage());
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -26,8 +21,7 @@ try {
 </html>
 <?php
 if ($_SESSION['connexion_reussie'] === true) {
-    $req_nom_prenom = $bdd->query('SELECT surname, name FROM users WHERE login = ' . $_SESSION['id_connexion']);
-    while ($donnees=$req_nom_prenom->fetch()) {
-        echo 'Bonjour ' . $donnees['surname'] . ' ' . $donnees['name'] . ", vous êtes connecté !";
-    }
+    $req_nom_prenom = $bdd->query("SELECT surname, name FROM users WHERE login = \"" . $_SESSION['id_connexion'] . "\"");
+    $donnees = $req_nom_prenom->fetch();
+    echo 'Bonjour ' . $donnees['surname'] . ' ' . $donnees['name'] . ", vous êtes connecté !";
 }

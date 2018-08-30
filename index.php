@@ -13,11 +13,6 @@ $_SESSION['mdp_connexion'] = filter_input(INPUT_POST, 'mdp_connexion', FILTER_SA
 $btn_connexion = filter_input(INPUT_POST, 'btn_connexion');
 
 include('./inc/fonctions.php');
-try {
-    $bdd = new PDO("mysql:host=localhost;dbname=forum", 'root', '');
-} catch (Exception $ex) {
-    die('Erreur : ' . $ex->getMessage());
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
