@@ -11,6 +11,13 @@ $_SESSION['connexion_reussie'] = false;
 $_SESSION['id_connexion'] = filter_input(INPUT_POST, 'id_connexion', FILTER_SANITIZE_STRING);
 $_SESSION['mdp_connexion'] = filter_input(INPUT_POST, 'mdp_connexion', FILTER_SANITIZE_STRING);
 $btn_connexion = filter_input(INPUT_POST, 'btn_connexion');
+
+include('./inc/fonctions.php');
+try {
+    $bdd = new PDO("mysql:host=localhost;dbname=forum", 'root', '');
+} catch (Exception $ex) {
+    die('Erreur : ' . $ex->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -21,8 +28,9 @@ $btn_connexion = filter_input(INPUT_POST, 'btn_connexion');
     </head>
     <body>
         <?php
-        if ($_SESSION['inscription_reussie']) {
+        if ($_SESSION['inscription_reussie'] == true) {
             echo "Votre inscription a été réussie. Connectez-vous !";
+            $_SESSION['inscription_reussie'] = false;
         }
         ?>
         <form method="POST" action="index.php">
@@ -45,11 +53,14 @@ $btn_connexion = filter_input(INPUT_POST, 'btn_connexion');
 <?php
 if ($btn_connexion) {
     if (!empty($_SESSION['id_connexion']) && !empty($_SESSION['mdp_connexion'])) {
-        if ($_SESSION['id_connexion'] !== $_SESSION['id_inscription'] || $_SESSION['mdp_connexion'] !== $_SESSION['mdp_inscription']) {
-            echo "Votre identifiant ou mot de passe est incorrect.";
-        } else {
-            $_SESSION['connexion_reussie'] = true;
-            header('Location: confirmation.php');
+        $req_connexion = $bdd->query('SELECT login, password FROM users');
+        while ($donnees = $req_connexion->fetch()) {
+            if ($_SESSION['id_connexion'] !== $donnees['login'] || $_SESSION['mdp_connexion'] !== $donnees['password']) {
+                echo "Votre identifiant ou mot de passe est incorrect.";
+            } else {
+                $_SESSION['connexion_reussie'] = true;
+                header('Location: confirmation.php');
+            }
         }
     }
 }

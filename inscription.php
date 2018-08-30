@@ -79,13 +79,14 @@ if ($btn_inscription) {
     if ($donnees_vides === false) {
         if ($_SESSION['mdp_inscription'] !== "" && $_SESSION['valid_mdp_inscription'] !== "" && $_SESSION['mdp_inscription'] === $_SESSION['valid_mdp_inscription']) {
             $_SESSION['inscription_reussie'] = true;
-            $req = $bdd->prepare('INSERT INTO users(surname, name, login, password) VALUES(?, ?, ?, ?)');
-            $req->execute(array(
+            $req_inscription = $bdd->prepare('INSERT INTO users(surname, name, login, password) VALUES(?, ?, ?, ?)');
+            $req_inscription->execute(array(
                 $_SESSION['prenom_inscription'],
                 $_SESSION['nom_inscription'],
                 $_SESSION['id_inscription'],
                 $_SESSION['mdp_inscription']
             ));
+            header('Location: index.php');
         } else {
             echo "Le mot de passe et sa validation sont vides ou ne sont pas identiques.";
         }
