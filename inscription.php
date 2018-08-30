@@ -20,10 +20,12 @@ $donnees_form = array($_SESSION['prenom_inscription'], $_SESSION['nom_inscriptio
     $_SESSION['id_inscription'], $_SESSION['mdp_inscription'],
     $_SESSION['valid_mdp_inscription']);
 
-$bdd = null;
-
 include('./inc/fonctions.php');
-connexionBDD($bdd, 'localhost', 'forum', 'root', '');
+try {
+    $bdd = new PDO("mysql:host=localhost;dbname=forum", 'root', '');
+} catch (Exception $ex) {
+    die('Erreur : ' . $ex->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -77,7 +79,7 @@ if ($btn_inscription) {
     if ($donnees_vides === false) {
         if ($_SESSION['mdp_inscription'] !== "" && $_SESSION['valid_mdp_inscription'] !== "" && $_SESSION['mdp_inscription'] === $_SESSION['valid_mdp_inscription']) {
             $_SESSION['inscription_reussie'] = true;
-            $req = connexionBDD($bdd, $host, $dbname, $user, $pwd)->prepare('INSERT INTO users(surname, name, login, password) VALUES(?, ?, ?, ?)');
+            $req = $bdd->prepare('INSERT INTO users(surname, name, login, password) VALUES(?, ?, ?, ?)');
             $req->execute(array(
                 $_SESSION['prenom_inscription'],
                 $_SESSION['nom_inscription'],
@@ -91,5 +93,3 @@ if ($btn_inscription) {
         echo "Merci de remplir tous les champs !";
     }
 }
-
-// Test
