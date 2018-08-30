@@ -91,3 +91,5 @@ if ($btn_inscription) {
         echo "Merci de remplir tous les champs !";
     }
 }
+
+// Test
