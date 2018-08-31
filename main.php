@@ -33,6 +33,8 @@ if ($btn_publication) {
         echo "<h1>";
         echo "Votre post a bien été publié.";
         echo "</h1>";
+        $_SESSION['titre_post'] = "";
+        $_SESSION['description_post'] = "";
     } else {
         echo "<h1>";
         echo "La publication de votre post a rencontré un problème.";
@@ -78,13 +80,22 @@ if ($btn_deconnexion) {
     </body>
 </html>
 <?php
-for ($i = 0; $i < count(getPosts(getUserByLogin($_SESSION['id_connexion'], $bdd)[2], $bdd)); $i++) {
-    foreach (getPosts(getUserByLogin($_SESSION['id_connexion'], $bdd)[2], $bdd)[$i] as $post) {
+for ($i = 0; $i < count(getPosts($bdd)); $i++) {
+    foreach (getPosts($bdd)[$i] as $post) {
+        echo "<div id=\"post\">";
+        echo "<p>";
+        echo "Auteur : " . getNamePoster($bdd, $post[4])[0] . " " . getNamePoster($bdd, $post[4])[1];
+        echo "</p>";
+        echo "<p>";
+        echo "Posté le " . (new DateTime($post[2]))->format("d.m.Y à H:i:s. ");
+        echo "Dernière modification le " . (new DateTime($post[3]))->format("d.m.Y à H:i:s.");
+        echo "</p>";
         echo "<h1>";
         echo $post[0];
         echo "</h1>";
         echo "<p>";
         echo $post[1];
         echo "</p>";
+        echo "</div>";
     }
 }

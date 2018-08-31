@@ -16,7 +16,9 @@ const PWD = "";
 try {
     $bdd = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, USER, PWD);
 } catch (Exception $ex) {
+    echo "<p class=\"warning\">";
     die('Erreur : ' . $ex->getMessage());
+    echo "</p>";
 }
 
 function getUserByLogin($login, $bdd) {
@@ -35,18 +37,30 @@ function insertPost($title, $description, $idUser, $bdd) {
         ));
         return true;
     } catch (Exception $ex) {
+        echo "<p class=\"warning\">";
         echo "Erreur : " . $ex->getMessage();
+        echo "</p>";
         return false;
     }
 }
 
-function getPosts($idUser, $bdd) {
+function getPosts($bdd) {
     $post_solo = [];
     $post_all = [];
-    $req_posts = $bdd->query("SELECT idNews, title, description FROM news WHERE idUser = \"" . $idUser . "\" ORDER BY idNews DESC");
+    $req_posts = $bdd->query("SELECT idNews, title, description, creationDate, lastEditDate FROM news ORDER BY idNews DESC");
     while ($donnees = $req_posts->fetch()) {
-    $post_solo[] = array($donnees['title'], $donnees['description']);
+    $post_solo[] = array($donnees['title'], $donnees['description'], $donnees['creationDate'], $donnees['lastEditDate'], $donnees['idNews']);
     $post_all[] = array($post_solo[count($post_solo) - 1]);
     }
     return $post_all;
+}
+
+function getNamePoster($bdd, $idNews) {
+    $req_name = $bdd->query("SELECT surname, name FROM users AS u, news AS n WHERE u.idUser = n.idUser AND idNews = " . "\"$idNews\"");
+    $donnees = $req_name->fetch();
+    return array($donnees['surname'], $donnees['name']);
+}
+
+function canModifyDelete($bdd) {
+    
 }
