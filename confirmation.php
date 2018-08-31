@@ -9,6 +9,7 @@
 session_start();
 
 include('./inc/fonctions.php');
+$donnees = null;
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,7 +22,5 @@ include('./inc/fonctions.php');
 </html>
 <?php
 if ($_SESSION['connexion_reussie'] === true) {
-    $req_nom_prenom = $bdd->query("SELECT surname, name FROM users WHERE login = \"" . $_SESSION['id_connexion'] . "\"");
-    $donnees = $req_nom_prenom->fetch();
-    echo 'Bonjour ' . $donnees['surname'] . ' ' . $donnees['name'] . ", vous êtes connecté !";
+    echo 'Bonjour ' . getUserByLogin($_SESSION['id_connexion'], $bdd)[0] . ' ' . getUserByLogin($_SESSION['id_connexion'], $bdd)[1] . ", vous êtes connecté !";
 }

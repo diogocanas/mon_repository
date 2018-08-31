@@ -83,10 +83,10 @@ if ($btn_inscription) {
                 $_SESSION['mdp_inscription']
             ));
             header('Location: index.php');
+        } else {
+            echo "Le mot de passe et sa validation sont vides ou ne sont pas identiques.";
         }
     } else {
-        echo "Le mot de passe et sa validation sont vides ou ne sont pas identiques.";
+        echo "Merci de remplir tous les champs !";
     }
-} else {
-    echo "Merci de remplir tous les champs !";
 }

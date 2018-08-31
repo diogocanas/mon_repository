@@ -1,4 +1,5 @@
 <?php
+
 /*
  *  Titre       : revision_forum | fonctions.php
  *  Auteur      : Diogo Canas Almeida
@@ -16,4 +17,36 @@ try {
     $bdd = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, USER, PWD);
 } catch (Exception $ex) {
     die('Erreur : ' . $ex->getMessage());
+}
+
+function getUserByLogin($login, $bdd) {
+    $req_nom_prenom = $bdd->query("SELECT idUser, surname, name FROM users WHERE login = \"" . $login . "\"");
+    $donnees = $req_nom_prenom->fetch();
+    return array($donnees['surname'], $donnees['name'], $donnees['idUser']);
+}
+
+function insertPost($title, $description, $idUser, $bdd) {
+    try {
+        $req_inscription = $bdd->prepare('INSERT INTO news(title, description, idUser) VALUES(?, ?, ?)');
+        $req_inscription->execute(array(
+            $title,
+            $description,
+            $idUser
+        ));
+        return true;
+    } catch (Exception $ex) {
+        echo "Erreur : " . $ex->getMessage();
+        return false;
+    }
+}
+
+function getPosts($idUser, $bdd) {
+    $post_solo = [];
+    $post_all = [];
+    $req_posts = $bdd->query("SELECT idNews, title, description FROM news WHERE idUser = \"" . $idUser . "\" ORDER BY idNews DESC");
+    while ($donnees = $req_posts->fetch()) {
+    $post_solo[] = array($donnees['title'], $donnees['description']);
+    $post_all[] = array($post_solo[count($post_solo) - 1]);
+    }
+    return $post_all;
 }

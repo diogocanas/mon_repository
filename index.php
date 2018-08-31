@@ -7,6 +7,9 @@
 -->
 <?php
 session_start();
+if (!$_SESSION['inscription_reussie']) {
+    $_SESSION['inscription_reussie'] = false;
+}
 $_SESSION['connexion_reussie'] = false;
 $_SESSION['id_connexion'] = filter_input(INPUT_POST, 'id_connexion', FILTER_SANITIZE_STRING);
 $_SESSION['mdp_connexion'] = filter_input(INPUT_POST, 'mdp_connexion', FILTER_SANITIZE_STRING);
