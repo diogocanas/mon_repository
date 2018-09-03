@@ -8,6 +8,7 @@
 <?php
 // Initialisation des variables
 session_start();
+include('./inc/fonctions.php');
 $_SESSION['inscription_reussie'] = false;
 $donnees_vides = true;
 $_SESSION['prenom_inscription'] = filter_input(INPUT_POST, 'prenom_inscription', FILTER_SANITIZE_STRING);
@@ -20,8 +21,6 @@ $donnees_form = array($_SESSION['prenom_inscription'], $_SESSION['nom_inscriptio
     $_SESSION['id_inscription'], $_SESSION['mdp_inscription'],
     $_SESSION['valid_mdp_inscription']);
 $liste_logins = array();
-
-include('./inc/fonctions.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">

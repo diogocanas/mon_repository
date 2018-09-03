@@ -10,6 +10,13 @@ session_start();
 
 include('./inc/fonctions.php');
 
+$req_getIdUserLogin = $bdd->query('SELECT idUser, login, password FROM users');
+while ($donnees = $req_getIdUserLogin->fetch()) {
+    if ($donnees['login'] == $_SESSION['id_connexion'] && $donnees['password'] == $_SESSION['mdp_connexion']) {
+        $_SESSION['idUser_login'] = $donnees['idUser'];
+    }
+}
+
 $_SESSION['titre_post'] = filter_input(INPUT_POST, 'titre_post', FILTER_SANITIZE_STRING);
 $_SESSION['description_post'] = filter_input(INPUT_POST, 'description_post', FILTER_SANITIZE_STRING);
 $btn_publication = filter_input(INPUT_POST, 'btn_publication');
@@ -58,7 +65,7 @@ if ($btn_deconnexion) {
     <head>
         <meta charset="utf-8" />
         <link rel="stylesheet" href="./css/style.css" />
-        <title>Page de confirmation de connexion</title>
+        <title>Page de création d'un post</title>
     </head>
     <body>
         <form method="POST" action="main.php">
@@ -96,6 +103,16 @@ for ($i = 0; $i < count(getPosts($bdd)); $i++) {
         echo "<p>";
         echo $post[1];
         echo "</p>";
+
+        if ($_SESSION['idUser_login'] === $post[5]) {
+            echo "<a href=\"updateNews.php?idNews=$post[4]\">";
+            echo "Modifier";
+            echo "</a>";
+            echo " ";
+            echo "<a href=\"deleteNews.php?idNews=$post[4]\">";
+            echo "Supprimer";
+            echo "</a>";
+        }
         echo "</div>";
     }
 }

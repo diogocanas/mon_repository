@@ -15,6 +15,7 @@ const PWD = "";
 
 try {
     $bdd = new PDO('mysql:host=' . HOST . ';dbname=' . DBNAME, USER, PWD);
+    $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (Exception $ex) {
     echo "<p class=\"warning\">";
     die('Erreur : ' . $ex->getMessage());
@@ -47,10 +48,10 @@ function insertPost($title, $description, $idUser, $bdd) {
 function getPosts($bdd) {
     $post_solo = [];
     $post_all = [];
-    $req_posts = $bdd->query("SELECT idNews, title, description, creationDate, lastEditDate FROM news ORDER BY idNews DESC");
+    $req_posts = $bdd->query("SELECT idNews, title, description, creationDate, lastEditDate, idUser FROM news ORDER BY idNews DESC");
     while ($donnees = $req_posts->fetch()) {
-    $post_solo[] = array($donnees['title'], $donnees['description'], $donnees['creationDate'], $donnees['lastEditDate'], $donnees['idNews']);
-    $post_all[] = array($post_solo[count($post_solo) - 1]);
+        $post_solo[] = array($donnees['title'], $donnees['description'], $donnees['creationDate'], $donnees['lastEditDate'], $donnees['idNews'], $donnees['idUser']);
+        $post_all[] = array($post_solo[count($post_solo) - 1]);
     }
     return $post_all;
 }
@@ -61,6 +62,25 @@ function getNamePoster($bdd, $idNews) {
     return array($donnees['surname'], $donnees['name']);
 }
 
-function canModifyDelete($bdd) {
-    
+function getPostById($bdd, $idNews) {
+    $req_post = $bdd->query('SELECT title, description FROM news WHERE idNews = ' . "\"$idNews\"");
+    $donnees = $req_post->fetch();
+    return array($donnees['title'], $donnees['description']);
+}
+
+function updatePost($bdd, $idPost, $title, $description) {
+    try {
+        $req_modif = $bdd->prepare("UPDATE news SET title=?, description=? WHERE idNews=?");
+        $req_modif->execute([$title,$description,$idPost]);
+        return true;
+    } catch (Exception $ex) {
+        die("Erreur : " . $ex->getMessage());
+        return false;
+    }
+}
+
+function deletePost($bdd, $idPost) {
+    $query = $bdd->prepare('DELETE FROM news WHERE idNews=?');
+    $query->execute([$idPost]);
+    echo "oui";
 }
