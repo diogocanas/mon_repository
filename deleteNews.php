@@ -5,6 +5,7 @@
     Version     : 1.0
     Description : Page de suppression de posts
 -->
+
 <?php
 session_start();
 include('inc/fonctions.php');

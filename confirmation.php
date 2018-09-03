@@ -5,6 +5,7 @@
     Version     : 1.0
     Description : Page de confirmation de la connexion d'un forum
 -->
+
 <?php
 session_start();
 
@@ -24,3 +25,6 @@ $donnees = null;
 if ($_SESSION['connexion_reussie'] === true) {
     echo 'Bonjour ' . getUserByLogin($_SESSION['id_connexion'], $bdd)[0] . ' ' . getUserByLogin($_SESSION['id_connexion'], $bdd)[1] . ", vous êtes connecté !";
 }
+?>
+<br />
+Si vous voulez publier un post, <a href="main.php">cliquez-ici</a> !

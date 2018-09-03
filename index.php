@@ -5,6 +5,7 @@
     Version     : 1.0
     Description : Page de connexion d'un forum
 -->
+
 <?php
 session_start();
 if (!$_SESSION['inscription_reussie']) {

@@ -68,10 +68,8 @@ function getPostById($bdd, $idNews) {
     return array($donnees['title'], $donnees['description']);
 }
 
-global $bdd;
-
 function updatePost($bdd, $idPost, $title, $description) {
-    $sql = "UPDATE news SET title=\"" . $title."\", description=\"".$description."\" WHERE idNews=\"".$idPost."\"";
+    $sql = "UPDATE news SET title=\"" . $title . "\", description=\"" . $description . "\", lastEditDate=\"" . date('Y-m-d H:i:s') . "\" WHERE idNews=\"" . $idPost . "\"";
     try {
         $req_modif = $bdd->exec($sql);
         return true;

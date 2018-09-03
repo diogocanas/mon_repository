@@ -5,8 +5,10 @@
         <group>
             <file>file:/C:/EasyPHP-Devserver-17/eds-www/projet_forum/css/style.css</file>
             <file>file:/C:/EasyPHP-Devserver-17/eds-www/projet_forum/index.php</file>
+            <file>file:/C:/EasyPHP-Devserver-17/eds-www/projet_forum/updateNews.php</file>
             <file>file:/C:/EasyPHP-Devserver-17/eds-www/projet_forum/inc/fonctions.php</file>
             <file>file:/C:/EasyPHP-Devserver-17/eds-www/projet_forum/main.php</file>
+            <file>file:/C:/EasyPHP-Devserver-17/eds-www/projet_forum/deleteNews.php</file>
             <file>file:/C:/EasyPHP-Devserver-17/eds-www/projet_forum/inscription.php</file>
             <file>file:/C:/EasyPHP-Devserver-17/eds-www/projet_forum/confirmation.php</file>
         </group>

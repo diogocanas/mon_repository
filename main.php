@@ -5,6 +5,7 @@
     Version     : 1.0
     Description : Page de création de posts
 -->
+
 <?php
 session_start();
 
@@ -33,9 +34,6 @@ if ($btn_publication) {
         echo "La saisie d'une description est obligatoire !";
         echo "</h1>";
     }
-}
-
-if ($btn_publication) {
     if (insertPost($_SESSION['titre_post'], $_SESSION['description_post'], getUserByLogin($_SESSION['id_connexion'], $bdd)[2], $bdd) === true) {
         echo "<h1>";
         echo "Votre post a bien été publié.";
@@ -56,7 +54,6 @@ if ($_SESSION['connexion_reussie'] === true) {
 }
 
 if ($btn_deconnexion) {
-    session_destroy();
     header('Location: index.php');
 }
 ?>

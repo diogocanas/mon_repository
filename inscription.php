@@ -5,6 +5,7 @@
     Version     : 1.0
     Description : Page d'inscription d'un forum
 -->
+
 <?php
 // Initialisation des variables
 session_start();
