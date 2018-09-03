@@ -1,9 +1,9 @@
 <!--
     Titre       : revision_forum | main.php
     Auteur      : Diogo Canas Almeida
-    Date        : 30.08.2018
+    Date        : 31.08.2018
     Version     : 1.0
-    Description : Page de création de 
+    Description : Page de création de posts
 -->
 <?php
 session_start();

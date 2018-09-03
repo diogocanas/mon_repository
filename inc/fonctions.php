@@ -68,10 +68,12 @@ function getPostById($bdd, $idNews) {
     return array($donnees['title'], $donnees['description']);
 }
 
+global $bdd;
+
 function updatePost($bdd, $idPost, $title, $description) {
+    $sql = "UPDATE news SET title=\"" . $title."\", description=\"".$description."\" WHERE idNews=\"".$idPost."\"";
     try {
-        $req_modif = $bdd->prepare("UPDATE news SET title=?, description=? WHERE idNews=?");
-        $req_modif->execute([$title,$description,$idPost]);
+        $req_modif = $bdd->exec($sql);
         return true;
     } catch (Exception $ex) {
         die("Erreur : " . $ex->getMessage());
@@ -80,7 +82,12 @@ function updatePost($bdd, $idPost, $title, $description) {
 }
 
 function deletePost($bdd, $idPost) {
-    $query = $bdd->prepare('DELETE FROM news WHERE idNews=?');
-    $query->execute([$idPost]);
-    echo "oui";
+    try {
+        $query = $bdd->prepare('DELETE FROM news WHERE idNews=?');
+        $query->execute([$idPost]);
+        return true;
+    } catch (Exception $ex) {
+        die('Erreur : ' . $ex->getMessage());
+        return false;
+    }
 }

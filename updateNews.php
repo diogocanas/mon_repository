@@ -1,3 +1,10 @@
+<!--
+    Titre       : revision_forum | updateNews.php
+    Auteur      : Diogo Canas Almeida
+    Date        : 03.09.2018
+    Version     : 1.0
+    Description : Page de modification de posts
+-->
 <?php
 session_start();
 include('inc/fonctions.php');
@@ -15,7 +22,7 @@ $btn_modification = filter_input(INPUT_POST, 'btn_modification');
     </head>
     <body>
         <h1>Mise à jour d'une nouvelle</h1>
-        <form method="POST" action="updateNews.php">
+        <form method="POST" action="updateNews.php?idNews=<?= $_SESSION['idNews'] ?>">
             <fieldset>
                 <legend>Données du post</legend>
                 <label for="titre-modif">Titre :</label>
@@ -29,12 +36,15 @@ $btn_modification = filter_input(INPUT_POST, 'btn_modification');
                 <input type="submit" name="btn_modification" value="Modifier" />
             </fieldset>
         </form>
-        <a href="main.php">Retour</a>
+        <?php
+        if ($btn_modification) {
+            if (updatePost($bdd, $_SESSION['idNews'], $_SESSION['title_modif'], $_SESSION['description_modif'])) {
+                echo "Le post a été modifié !";
+            } else {
+                echo "La modification de ce post a rencontré un problème. Veuillez réessayez plus tard.";
+            }
+        }
+        ?>
+        <a href = "main.php">Retour</a>
     </body>
 </html>
-<?php
-if ($btn_modification) {
-    if (updatePost($bdd, $_SESSION['idNews'], $_SESSION['title_modif'], $_SESSION['description_modif'])) {
-        echo $_SESSION['idNews'];
-    }
-}
